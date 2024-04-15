@@ -21,6 +21,9 @@ const Header = () => {
             <li className="font-normal">
               <Link href="/">Home</Link>
             </li>
+            <li className="font-normal">
+              <Link href={paths.landing.picker}>Picker</Link>
+            </li>
           </ul>
         </div>
         <div className="flex  md:gap-x-7 items-center justify-end mr-10">

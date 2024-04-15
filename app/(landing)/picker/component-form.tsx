@@ -87,7 +87,8 @@ const ComponentForm = () => {
 
         <SCNMultiImagePicker
           name="Multi Image Picker"
-          limit={3}
+          //To set a file limit you can provide this props to the child
+          // limit={3}
           schemaName="multiImage"
         ></SCNMultiImagePicker>
         <Button type="submit">Submit</Button>
