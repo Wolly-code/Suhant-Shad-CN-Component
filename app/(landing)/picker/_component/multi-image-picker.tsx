@@ -11,8 +11,14 @@ type Props = {
   schemaName: string;
   multiple?: boolean;
   limit?: number;
+  name: string;
 };
-const SCNMultiImagePicker = ({ schemaName, multiple = true, limit }: Props) => {
+const SCNMultiImagePicker = ({
+  name,
+  schemaName,
+  multiple = true,
+  limit,
+}: Props) => {
   const [selectedImages, setSelectedImages] = React.useState<
     (string | File)[] | null
   >(null);
@@ -45,17 +51,41 @@ const SCNMultiImagePicker = ({ schemaName, multiple = true, limit }: Props) => {
     }
   };
 
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const files = event.dataTransfer.files;
+    if (files) {
+      const newImages = Array.from(files);
+      if (limit && newImages.length + (selectedImages?.length ?? 0) > limit) {
+        setError(schemaName, {
+          type: "custom",
+          message: `Image cannot be more than ${limit}`,
+        });
+        return;
+      }
+      if (multiple) {
+        const updatedImages = [...(selectedImages || []), ...newImages];
+        setSelectedImages(updatedImages);
+        setValue(schemaName, updatedImages);
+      } else {
+        setSelectedImages(newImages);
+        setValue(schemaName, newImages);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div>
+      <Label htmlFor={schemaName}>{name}</Label>
+      <>
         <div
           className="w-auto bg-slate-50 dark:bg-gray-700 border h-96 gap-4 rounded-lg flex flex-col justify-center items-center hover:bg-slate-100 duration-300"
           onClick={handleContainerClick}
         >
           <img className="w-48 h-48" src={"upload-image.svg"} alt="" />
-          <p>Drop or Select File</p>
+          <p>Select File</p>
           <p className="text-sm text-gray-400">
-            Drop your files here or click browse through your machine
+            Click browse through your machine
           </p>
           <Controller
             name={schemaName}
@@ -114,7 +144,7 @@ const SCNMultiImagePicker = ({ schemaName, multiple = true, limit }: Props) => {
             )}
           />
         </div>
-      </div>
+      </>
 
       <div className="flex gap-4 flex-wrap">
         <AnimatePresence>
@@ -140,7 +170,7 @@ const SCNMultiImagePicker = ({ schemaName, multiple = true, limit }: Props) => {
                 />
                 <X
                   onClick={() => handleDeleteButtonClicked(index)}
-                  className="absolute top-0 right-0 bg-black rounded-full p-1  text-white"
+                  className="absolute cursor-pointer top-0 right-0 bg-black rounded-full p-1  text-white hover:text-gray-200 duration-300"
                 ></X>
               </motion.div>
             ))}

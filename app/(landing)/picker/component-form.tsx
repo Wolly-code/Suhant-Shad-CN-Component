@@ -54,11 +54,16 @@ const ComponentForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="container flex flex-col gap-6 w-1/2"
+        className="flex flex-col gap-6 "
       >
-        <SCNSingleImagePicker schemaName="imageVal" />
+        <SCNSingleImagePicker
+          name="Image Picker 1"
+          variant="type2"
+          schemaName="imageVal"
+        />
 
         <SCNMultiImagePicker
+          name="Multi Image Picker"
           limit={3}
           schemaName="multiImage"
         ></SCNMultiImagePicker>
