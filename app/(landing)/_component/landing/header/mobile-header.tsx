@@ -45,31 +45,6 @@ const MobileHeader = () => {
                     About Us
                   </Link>
                 </li>
-
-                <li className="font-normal ">
-                  <Link
-                    href={paths.landing.devops}
-                    onClick={() => setSheetOpen(false)}
-                  >
-                    DevOps
-                  </Link>
-                </li>
-                <li className="font-normal ">
-                  <Link
-                    href={paths.landing.aws}
-                    onClick={() => setSheetOpen(false)}
-                  >
-                    AWS
-                  </Link>
-                </li>
-                <li className="font-normal ">
-                  <Link
-                    href={paths.landing.pay}
-                    onClick={() => setSheetOpen(false)}
-                  >
-                    Pay
-                  </Link>
-                </li>
               </ul>
             </div>
           </SheetDescription>
