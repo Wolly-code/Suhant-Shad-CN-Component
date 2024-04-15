@@ -10,7 +10,20 @@ import { Button } from "@/components/ui/button";
 import SCNMultiImagePicker from "./_component/multi-image-picker";
 
 const FormSchema = z.object({
-  imageVal: z
+  standard: z
+    .any()
+    .refine(
+      (val) => typeof val === "string" || val instanceof File,
+      "Please select an image"
+    ),
+
+  imageAvatar: z
+    .any()
+    .refine(
+      (val) => typeof val === "string" || val instanceof File,
+      "Please select an image"
+    ),
+  imageBox: z
     .any()
     .refine(
       (val) => typeof val === "string" || val instanceof File,
@@ -32,7 +45,7 @@ const ComponentForm = () => {
 
   useEffect(() => {
     form.setValue(
-      "imageVal",
+      "standard",
       "https://images.unsplash.com/photo-1635373390303-cc78167278ee"
     );
     form.setValue("multiImage", [
@@ -41,7 +54,7 @@ const ComponentForm = () => {
   }, []);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
-    if (typeof values.imageVal === "string") {
+    if (typeof values.standard === "string") {
       console.log("type:string Dont Upload to cloud");
     } else {
       console.log("type: File Upload to cloud");
@@ -57,9 +70,19 @@ const ComponentForm = () => {
         className="flex flex-col gap-6 "
       >
         <SCNSingleImagePicker
-          name="Image Picker 1"
-          variant="type2"
-          schemaName="imageVal"
+          name="Image Picker Standard"
+          variant="standard"
+          schemaName="standard"
+        />
+        <SCNSingleImagePicker
+          name="Image Picker Box"
+          variant="imageBox"
+          schemaName="imageBox"
+        />
+        <SCNSingleImagePicker
+          name="Image Picker Avatar"
+          variant="avatar"
+          schemaName="imageAvatar"
         />
 
         <SCNMultiImagePicker

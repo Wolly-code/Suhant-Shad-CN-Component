@@ -1,3 +1,4 @@
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Controller, useFormContext } from "react-hook-form";
@@ -12,12 +13,14 @@ type Props = {
   multiple?: boolean;
   limit?: number;
   name: string;
+  accept?: string;
 };
 const SCNMultiImagePicker = ({
   name,
   schemaName,
   multiple = true,
   limit,
+  accept = "image/*",
 }: Props) => {
   const [selectedImages, setSelectedImages] = React.useState<
     (string | File)[] | null
@@ -103,7 +106,7 @@ const SCNMultiImagePicker = ({
                   ref={inputFileRef}
                   placeholder="Picture"
                   type="file"
-                  accept="image/*, application/pdf"
+                  accept={accept}
                   onChange={(event) => {
                     const files = event.target.files;
                     if (files) {
